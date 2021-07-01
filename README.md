@@ -4,6 +4,8 @@
 
 It is a NOSQL Document based Database. Where all entries stored in documnent in json format.
 
+It is a basic document for understanding basic of MongoDB for RDBMS Developers and DBAs.
+
 ## MongoDB Characterstics
 
 1. **Speed**
@@ -22,43 +24,74 @@ We can go to official website and download zip file and extract. Create two addi
 
 ## Basic queries for MongoDB
 
-1. **Show dbs**:- It will show all the DBs present currently.
+1. **Show dbs**:- It will show all the DBs present currently. It is similar to SQL Server 
 
-2. **use mydb**:-Create mydb if not exist and switch to mydb.
+> ```SELECT name FROM master.dbo.sysdatabases.```
 
-3. **db.createCollections('friends')**:-Create a collection named *'friends'*.
+2. **use mydb**:-Create mydb if not exist and switch to mydb.It is similar to **Use mydb** in SQL Server.
 
-4. **db.friends.insert({name:"john",age:23})**:-insert Document(record) in collection *friends*.
+3. **db.createCollections('friends')**:-Create a collection named *'friends'*. Think it like creating table *friends*, but here we are not specifying columns. Where we are referraing collection it is similar to table in RDBMS.
 
-5. **db.friends.find()**:- return all the enteries from the collection friends.
+4. **db.friends.insert({name:"john",age:23})**:-insert Document(record) in collection *friends*. It is similar to insert data in RDBMS, we have to specific key value pair. Think key as column name and value is value in table. Columns insertion is dynamic you can add different columns for each record(document).
 
-6. **db.friends.insert({name:"Mary",age:25})**:- Insert the document({name:"Mary",age:25}) into friends collection.
+5. **db.friends.find()**:- return all the enteries from the collection friends. It is similar to
 
-7. **db.friends.find({name:"john"})**:- it will return all document where name is *john*.
+> ```select * from friends;```
 
-8. **db.friends.find({age:23})**:- return all documents in friends collection with age 23.
+6. **db.friends.insert({name:"Mary",age:25})**:- Insert the document({name:"Mary",age:25}) into friends collection. It is similar to
 
-9. **db.friends.find({},{name:1})**:- Return all the documents as filter condition is ({}). Data will be returned _id , name field as fields to return specify as ({name:1}). By default _id will be returned. To remove _id from the result we have to write **db.friends.find({},{name:1,_id=0})**. For including the field keep 1 for excluding 0.
+> ```Select * from friends where name = 'Mary' and age=25;```
 
-10. **db.friends.find({},{age:1,_id:0}).sort(age:1)**:- It will sort the returned records with age Ascending order. To sort it descending we can use *.sort(age:-1)*.
+7. **db.friends.find({name:"john"})**:- it will return all document where name is *john*. It is similar to
 
-11. **db.friends.find().Limit(1)**:- It will return only one record/document from friends collection.
+> ```select * from friends where name = 'john';```
+
+8. **db.friends.find({age:23})**:- return all documents in friends collection with age 23. It is similar to
+
+> ```select * from where age=23;```
+
+9. **db.friends.find({},{name:1})**:- Return all the documents as filter condition is ({}). Data will be returned _id , name field as fields to return specify as ({name:1}). By default _id will be returned. To remove _id from the result we have to write **db.friends.find({},{name:1,_id=0})**. For including the field keep 1 for excluding 0. It is similar to
+
+> ```select _id,name from friends;```
+
+10. **db.friends.find({},{age:1,_id:0}).sort(age:1)**:- It will sort the returned records with age Ascending order. To sort it descending we can use *.sort(age:-1)*.It is similar to
+
+> ```select age from friends order by age;```
+
+11. **db.friends.find().Limit(1)**:- It will return only one record/document from friends collection. It is similar to
+
+> ```Select top 1 * from friends;``` 
+>```Select * from friends LIMIT 1;```
 
 ## Update Documents in MongoDB
 
-1. ```db.friends.update({},{$set:{gender:"m"}})```:- It will update the by default one document. First parameter in update is filter criteria which is blank, should have multiple records but to update multiple document. We explicitly has to specify **db.friends.update({},{$set:{gender:"m"}},{multi="true"})**
+1. ```db.friends.update({},{$set:{gender:"m"}})```:- It will update the by default one document. First parameter in update is filter criteria which is blank, should have multiple records but to update multiple document. We explicitly has to specify **db.friends.update({},{$set:{gender:"m"}},{multi="true"})**. It is similar to 
 
-2. ```db.friends.update({name:"Mary"},{$set:{gender:"f"}})```:-It will update only record for Mary.
+> ```ALTER TABLE friends ADD gender; ```
+> ```Update friends set gender = 'm'``` if multi is ture
 
-3. ```db.friends.update({},{$unset:{gender=""}},{multi="true"})```:- It will remove the column gender from all the documents as multi is true. If we haven't used multi then only one record/document will be updated.
+2. ```db.friends.update({name:"Mary"},{$set:{gender:"f"}})```:-It will update only record for Mary. It is similar to
+
+> ```update friends set gender='f' where name='Mary';```
+
+3. ```db.friends.update({},{$unset:{gender=""}},{multi="true"})```:- It will remove the column gender from all the documents as multi is true. If we haven't used multi then only one record/document will be updated. It is similar to
+
+> ```Alter table drop column gender;```
 
 4. ```db.friends.update({name:"john"},{name:"John2",favouritefood:"indian"})```:- it will update the document for john to john2.
 
-5. ```db.friends.remove({name:"john2"})```:- It woll only remove document for john2.
+5. ```db.friends.remove({name:"john2"})```:- It will only remove document for john2. It is similar to
 
-6. ```db.friends.remove()```:- It will remove all the documents present in friends collection.
+> ```delete from friends where name='john2';```
 
-7. ```db.friends.drop()```:- It will drop the collection friends from DB.
+
+6. ```db.friends.remove()```:- It will remove all the documents present in friends collection. It similar to
+
+> ```delete from friends;```
+
+7. ```db.friends.drop()```:- It will drop the collection friends from DB. it is similar to 
+
+> ```drop table friends;```
 
 ## Document Relationships
 
